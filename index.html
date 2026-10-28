@@ -12,15 +12,41 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Barlow,system-ui,sans-serif;line-height:1.5}
 main{max-width:720px;margin:0 auto;padding:44px 16px 72px}
-h1,h2,.name,.block,.cond{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif}
+h1,h2,h3,.name,.block,.cond{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif}
 header{text-align:center;margin:0 0 30px}
 h1{margin:0;font-weight:700;font-size:clamp(54px,18vw,92px);line-height:.9;letter-spacing:.06em;color:var(--gold);padding-left:.06em}
 .kicker{margin:10px 0 0;font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;font-size:16px;letter-spacing:.38em;text-transform:uppercase;color:var(--ink);padding-left:.38em}
 .rule{height:1px;margin:22px auto 0;max-width:260px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .sub{color:var(--muted);font-size:14px;margin:12px 0 0}
-#s{display:block;width:100%;font:inherit;font-size:16px;padding:12px 2px;border:0;border-bottom:1px solid var(--goldline);background:transparent;color:var(--ink);margin:0 0 26px;border-radius:0}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible,summary:focus-visible,#s:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.pn:hover{text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
+#top{margin:0 0 30px}
+.label{margin:0 0 14px;text-align:center;font-weight:600;font-size:15px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);padding-left:.38em}
+.champ{border:1px solid var(--goldline);border-top:2px solid var(--gold);background:linear-gradient(180deg,#1b1810,var(--card));padding:18px 12px 16px;text-align:center}
+.champ .tag{font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);padding-left:.3em}
+.champ .pn{display:block;margin:4px auto 0;font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:700;font-size:clamp(34px,10vw,48px);line-height:1.05;color:var(--gold);letter-spacing:.03em;overflow-wrap:anywhere}
+.wins{font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:500;font-size:17px;letter-spacing:.16em;text-transform:uppercase}
+.runners{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 0}
+.run{border:1px solid var(--goldline);background:var(--card);padding:12px 8px;text-align:center;min-width:0}
+.run .tag{font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;font-size:12px;letter-spacing:.3em;text-transform:uppercase;padding-left:.3em}
+.run.r2 .tag{color:var(--silver)}.run.r3 .tag{color:var(--bronze)}
+.run .pn{display:block;margin:2px auto 0;font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:700;font-size:24px;line-height:1.1;overflow-wrap:anywhere}
+.run .wins{font-size:15px;color:var(--muted)}
+details{margin:10px 0 0;border:1px solid var(--goldline)}
+summary{cursor:pointer;padding:12px;text-align:center;font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;font-size:14px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);list-style:none}
+summary::-webkit-details-marker{display:none}
+ol.lb{list-style:none;margin:0;padding:0 12px 8px}
+ol.lb li{display:flex;align-items:baseline;gap:12px;padding:9px 0;border-top:1px solid rgba(212,175,55,.2)}
+.lb .rk{width:28px;font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;color:var(--muted)}
+.lb .pn{flex:1;text-align:left;font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;font-size:20px;overflow-wrap:anywhere}
+.lb .ct{font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;color:var(--gold);font-size:18px}
+#s{display:block;width:100%;font:inherit;font-size:16px;padding:12px 2px;border:0;border-bottom:1px solid var(--goldline);background:transparent;color:var(--ink);margin:0 0 8px;border-radius:0}
 #s::placeholder{color:var(--muted)}
 #s:focus{outline:0;border-bottom-color:var(--gold)}
+#clr{display:block;margin:0 0 18px;font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+#clr[hidden]{display:none}
+#gap{height:18px}
 .event{background:linear-gradient(180deg,#171512,var(--card) 60%);border:1px solid var(--goldline);border-top:2px solid var(--gold);border-radius:2px;padding:20px 16px 0;margin:0 0 18px;overflow:hidden}
 .head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 0 22px}
 h2{margin:0;font-weight:700;font-size:24px;letter-spacing:.05em;text-transform:uppercase;line-height:1.15}
@@ -28,7 +54,7 @@ h2{margin:0;font-weight:700;font-size:24px;letter-spacing:.05em;text-transform:u
 .podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:6px;align-items:end;margin:0 -16px}
 .podium .slot:first-child{margin-left:16px}.podium .slot:last-child{margin-right:16px}
 .slot{display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0}
-.name{margin:0 0 6px;font-weight:600;font-size:19px;line-height:1.15;letter-spacing:.02em;overflow-wrap:anywhere}
+.name{margin:0 0 6px;font-weight:600;font-size:19px;line-height:1.15;letter-spacing:.02em;overflow-wrap:anywhere;font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif}
 .badge{font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 12px;overflow-wrap:anywhere}
 .badge:empty{display:none}
 .p1 .badge{color:var(--gold)}.p2 .badge{color:var(--silver)}.p3 .badge{color:var(--bronze)}
@@ -37,7 +63,7 @@ h2{margin:0;font-weight:700;font-size:24px;letter-spacing:.05em;text-transform:u
 .p2 .block{height:60px;background:linear-gradient(180deg,#e6e9ee,#98a0ab)}
 .p3 .block{height:44px;background:linear-gradient(180deg,#dea06a,#9a5d2b)}
 .foot,.empty{color:var(--muted);font-size:13px;text-align:center;letter-spacing:.04em}
-@media (max-width:400px){.name{font-size:16px}.badge{font-size:11px;letter-spacing:.1em}h2{font-size:20px}.head{flex-direction:column;gap:2px}}
+@media (max-width:400px){.name{font-size:16px}.badge{font-size:11px;letter-spacing:.1em}h2{font-size:20px}.head{flex-direction:column;gap:2px}.run .pn{font-size:21px}}
 </style>
 </head>
 <body>
@@ -48,12 +74,16 @@ h2{margin:0;font-weight:700;font-size:24px;letter-spacing:.05em;text-transform:u
 <div class="rule"></div>
 <p class="sub">Uma Love Racing Association</p>
 </header>
+<div id="top"></div>
 <input id="s" type="search" placeholder="Search events or players" aria-label="Search events or players">
-<div id="events"></div>
+<button id="clr" hidden>Show all events</button>
+<div id="events"><p class="empty">Loading results...</p></div>
+<noscript><p class="empty">This page needs JavaScript turned on to show the results.</p></noscript>
 <p class="foot" id="count"></p>
 </main>
 <script>
-var EVENTS=[];
+var EVENTS=[],LEAD=[],done=false,KEY="ulra-cache-v2";
+setTimeout(function(){if(!done)msg("Taking too long to load. Try opening this link in Safari or Chrome.")},8000);
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function csv(t){
   var rows=[],r=[],f="",q=false,i,c;
@@ -67,31 +97,70 @@ function csv(t){
   if(f!==""||r.length){r.push(f);rows.push(r)}
   return rows;
 }
-function slot(c,r,n,b){return '<div class="slot '+c+'"><p class="name">'+esc(n)+'</p><span class="badge">'+esc(b)+'</span><div class="block">'+r+'</div></div>'}
+function build(t){
+  var rows=csv(t).slice(1).filter(function(r){return r[0]&&r[0].trim()});
+  EVENTS=rows.reverse().map(function(r){
+    function g(k){return (r[k]||"").trim()}
+    return {n:g(0),d:g(1),n1:g(2),b1:g(3),n2:g(4),b2:g(5),n3:g(6),b3:g(7),all:r.join(" ").toLowerCase()};
+  });
+  var m={},order=[];
+  EVENTS.forEach(function(e){
+    var k=e.n1.toLowerCase();if(!k)return;
+    if(!m[k]){m[k]={n:e.n1,w:0,o:order.length};order.push(k)}
+    m[k].w++;
+  });
+  LEAD=order.map(function(k){return m[k]}).sort(function(a,b){return b.w-a.w||a.o-b.o});
+}
+function pn(n,cls){return '<button class="pn '+(cls||"")+'" data-n="'+esc(n)+'">'+esc(n)+'</button>'}
+function wl(w){return w+(w==1?" win":" wins")}
+function slot(c,r,n,b){return '<div class="slot '+c+'">'+pn(n,"name")+'<span class="badge">'+esc(b)+'</span><div class="block">'+r+'</div></div>'}
+function renderTop(){
+  var el=document.getElementById("top");
+  if(!LEAD.length){el.innerHTML="";return}
+  var h='<h3 class="label">Most Wins</h3><div class="champ"><div class="tag">Leader</div>'+pn(LEAD[0].n)+'<div class="wins">'+wl(LEAD[0].w)+'</div></div>';
+  if(LEAD.length>1){
+    h+='<div class="runners">';
+    LEAD.slice(1,3).forEach(function(p,i){h+='<div class="run r'+(i+2)+'"><div class="tag">'+(i?"3rd":"2nd")+'</div>'+pn(p.n)+'<div class="wins">'+wl(p.w)+'</div></div>'});
+    h+='</div>';
+  }
+  if(LEAD.length>3){
+    h+='<details><summary>Full leaderboard</summary><ol class="lb">';
+    LEAD.forEach(function(p,i){h+='<li><span class="rk">'+(i+1)+'</span>'+pn(p.n)+'<span class="ct">'+wl(p.w)+'</span></li>'});
+    h+='</ol></details>';
+  }
+  el.innerHTML=h;
+}
 function render(){
-  var q=document.getElementById("s").value.toLowerCase(),h="";
+  var inp=document.getElementById("s"),q=inp.value.toLowerCase().trim(),h="";
   EVENTS.forEach(function(e){
     if(q&&e.all.indexOf(q)<0)return;
     h+='<section class="event"><div class="head"><h2>'+esc(e.n)+'</h2><span class="date">'+esc(e.d)+'</span></div><div class="podium">'+slot("p2",2,e.n2,e.b2)+slot("p1",1,e.n1,e.b1)+slot("p3",3,e.n3,e.b3)+'</div></section>';
   });
   document.getElementById("events").innerHTML=h||'<p class="empty">No events found.</p>';
+  document.getElementById("clr").hidden=!q;
   document.getElementById("count").textContent=EVENTS.length+" events on record";
+  renderTop();
 }
-function msg(t){document.getElementById("events").innerHTML='<p class="empty">'+t+'</p>'}
+function msg(t){if(EVENTS.length)return;done=true;document.getElementById("events").innerHTML='<p class="empty">'+t+'</p>'}
+try{var c=localStorage.getItem(KEY);if(c){build(c);if(EVENTS.length){done=true;render()}}}catch(e){}
 fetch("sheet-link.txt?"+Date.now()).then(function(r){return r.text()}).then(function(u){
   u=u.trim();
   if(u.indexOf("http")!==0){msg("Sheet link not added yet.");return}
   return fetch(u).then(function(r){return r.text()}).then(function(t){
     if(t.trim().charAt(0)==="<"){msg("That link is not the published CSV link.");return}
-    var rows=csv(t).slice(1).filter(function(r){return r[0]&&r[0].trim()});
-    EVENTS=rows.reverse().map(function(r){
-      function g(k){return (r[k]||"").trim()}
-      return {n:g(0),d:g(1),n1:g(2),b1:g(3),n2:g(4),b2:g(5),n3:g(6),b3:g(7),all:r.join(" ").toLowerCase()};
-    });
-    render();
+    build(t);done=true;render();
+    try{localStorage.setItem(KEY,t)}catch(e){}
   });
 }).catch(function(){msg("Could not load the results sheet.")});
 document.getElementById("s").addEventListener("input",render);
+document.getElementById("clr").addEventListener("click",function(){document.getElementById("s").value="";render()});
+document.addEventListener("click",function(ev){
+  var b=ev.target.closest?ev.target.closest(".pn"):null;
+  if(!b)return;
+  var s=document.getElementById("s");
+  s.value=b.getAttribute("data-n");render();
+  s.scrollIntoView({behavior:"smooth",block:"start"});
+});
 </script>
 </body>
 </html>
