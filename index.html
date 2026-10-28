@@ -91,9 +91,6 @@ h2{margin:0;font-weight:700;font-size:25px;letter-spacing:.05em;text-transform:u
 .p1 .block{height:92px;background:linear-gradient(180deg,#fff0a8,#e8c24a 40%,#b88a1c);box-shadow:0 0 26px rgba(224,185,60,.45)}
 .p2 .block{height:64px;background:linear-gradient(180deg,#ffffff,#d5d9df 45%,#8b93a0)}
 .p3 .block{height:46px;background:linear-gradient(180deg,#f6c08a,#cd7f32 50%,#8a4f1f)}
-.sharebar{display:flex;align-items:center;justify-content:center;gap:10px;width:calc(100% + 32px);margin:0 -16px;padding:13px 12px;background:var(--gg);color:#1a1205;font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:.22em;text-transform:uppercase}
-.sharebar svg{width:18px;height:18px}
-.sharebar:hover{filter:brightness(1.08)}
 .empty{color:var(--muted);font-size:13px;text-align:center;letter-spacing:.04em}
 dialog{width:min(440px,92vw);max-height:86vh;overflow:auto;background:linear-gradient(180deg,#171220,#0c0a10);color:var(--ink);border:1px solid var(--gold);border-top-width:3px;border-radius:2px;padding:20px 18px;box-shadow:0 0 50px rgba(224,185,60,.25)}
 dialog::backdrop{background:rgba(3,2,6,.8)}
@@ -129,14 +126,15 @@ ul.hl small{color:var(--muted);font-size:13px;text-align:right}
 .event.rv.in .p3 .block{transition-delay:.2s}.event.rv.in .p2 .block{transition-delay:.4s}.event.rv.in .p1 .block{transition-delay:.65s}
 .event.rv .slot>*:not(.block){opacity:0}
 .event.rv.in .slot>*:not(.block){opacity:1;transition:opacity .6s ease .95s}
-.sharebar{position:relative;overflow:hidden}
-.sharebar::after{content:"";position:absolute;top:0;bottom:0;left:-90px;width:70px;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);animation:sw 5s ease-in-out infinite}
-@keyframes sw{0%,65%{left:-90px}100%{left:115%}}
 button:active{transform:scale(.98)}
 dialog[open]{animation:pop .28s ease}
 @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.97)}}
-@media (prefers-reduced-motion:reduce){.event.rv,.event.rv .block,.event.rv .slot>*{opacity:1!important;transform:none!important;clip-path:none!important;transition:none!important}.sharebar::after,dialog[open]{animation:none}}
-@media (max-width:400px){.name{font-size:16px}.p1 .name{font-size:19px}.badge{font-size:11px;letter-spacing:.1em}h2{font-size:21px}.head{flex-direction:column;gap:2px}.run .pn{font-size:21px}.orn i{width:56px}}
+@media (prefers-reduced-motion:reduce){.event.rv,.event.rv .block,.event.rv .slot>*{opacity:1!important;transform:none!important;clip-path:none!important;transition:none!important}dialog[open]{animation:none}}
+.rt{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.smallshare{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border:1px solid var(--gold);color:var(--gold);background:rgba(224,185,60,.08);font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;line-height:1.2}
+.smallshare svg{width:14px;height:14px}
+.smallshare:hover{background:var(--gg);color:#1a1205;border-color:transparent}
+@media (max-width:400px){.rt{align-items:flex-start}.name{font-size:16px}.p1 .name{font-size:19px}.badge{font-size:11px;letter-spacing:.1em}h2{font-size:21px}.head{flex-direction:column;gap:2px}.run .pn{font-size:21px}.orn i{width:56px}}
 @media (prefers-reduced-motion:reduce){h1,.reign{animation:none}}
 </style>
 </head>
@@ -291,7 +289,7 @@ function render(){
   list.forEach(function(e){
     if(q&&e.all.indexOf(q)<0)return;
     if(year!=="all"&&e.y!==year)return;
-    h+='<section class="event"><div class="head"><h2>'+esc(e.n)+'</h2><span class="date">'+esc(e.d)+'</span></div><div class="podium">'+slot("p2",2,e.n2,e.b2)+slot("p1",1,e.n1,e.b1)+slot("p3",3,e.n3,e.b3)+'</div><button class="shr sharebar" data-i="'+e.i+'">'+SHI+'Share this podium</button></section>';
+    h+='<section class="event"><div class="head"><h2>'+esc(e.n)+'</h2><div class="rt"><span class="date">'+esc(e.d)+'</span><button class="shr smallshare" data-i="'+e.i+'">'+SHI+'Share</button></div></div><div class="podium">'+slot("p2",2,e.n2,e.b2)+slot("p1",1,e.n1,e.b1)+slot("p3",3,e.n3,e.b3)+'</div></section>';
   });
   $("events").innerHTML=h||'<p class="empty">No events found.</p>';
   $("clr").hidden=!(q||year!=="all");
@@ -340,13 +338,20 @@ function shareImg(i){
     x.strokeStyle="rgba(224,185,60,.45)";x.lineWidth=1.5;x.strokeRect(54,54,W-108,H-108);
     x.textAlign="center";
     crown(W/2,92,120);
-    x.save();x.shadowColor="rgba(224,185,60,.6)";x.shadowBlur=36;x.fillStyle=gg(W/2-260,150,W/2+260,330);x.font="700 190px "+F;sp("",14);x.fillText("ULRA",W/2+7,330);x.restore();
-    x.fillStyle="#f6efdc";x.font="600 38px "+F;sp("",16);x.fillText("HALL OF RECORDS",W/2+8,396);sp("",0);
-    x.fillStyle=gg(W/2-200,420,W/2+200,430);x.fillRect(W/2-230,440,190,2);x.fillRect(W/2+40,440,190,2);
-    x.save();x.translate(W/2,441);x.rotate(Math.PI/4);x.fillStyle=gg(-8,-8,8,8);x.fillRect(-9,-9,18,18);x.restore();
-    x.fillStyle="#f6efdc";fit(e.n.toUpperCase(),W-200,84,"700");x.fillText(e.n.toUpperCase(),W/2,542);
-    x.fillStyle="#e0b93c";x.font="600 42px "+F;sp("",8);x.fillText(e.d.toUpperCase(),W/2+4,600);sp("",0);
-    var base=1150,pw=290,slots=[[234,e.n2,e.b2,260,["#ffffff","#d5d9df","#8b93a0"],"#d5d9df","2"],[540,e.n1,e.b1,370,["#fff0a8","#e8c24a","#b88a1c"],"#e0b93c","1"],[846,e.n3,e.b3,190,["#f6c08a","#cd7f32","#8a4f1f"],"#d98f52","3"]];
+    x.save();x.shadowColor="rgba(224,185,60,.6)";x.shadowBlur=36;x.fillStyle=gg(W/2-260,150,W/2+260,330);x.font="700 190px "+F;sp("",14);x.fillText("ULRA",W/2+7,320);x.restore();
+    x.fillStyle="#f6efdc";x.font="600 38px "+F;sp("",16);x.fillText("HALL OF RECORDS",W/2+8,384);sp("",0);
+    x.fillStyle=gg(W/2-200,420,W/2+200,430);x.fillRect(W/2-230,423,190,2);x.fillRect(W/2+40,423,190,2);
+    x.save();x.translate(W/2,424);x.rotate(Math.PI/4);x.fillStyle=gg(-8,-8,8,8);x.fillRect(-9,-9,18,18);x.restore();
+    x.fillStyle="#f6efdc";fit(e.n.toUpperCase(),W-200,84,"700");x.fillText(e.n.toUpperCase(),W/2,516);
+    if(e.d){
+      x.font="600 44px "+F;sp("",8);var dt=e.d.toUpperCase(),dw=x.measureText(dt).width;
+      x.fillStyle="#e0b93c";x.fillText(dt,W/2+4,580);sp("",0);
+      var lg=x.createLinearGradient(W/2-dw/2-40,0,W/2-dw/2-200,0);lg.addColorStop(0,"#e0b93c");lg.addColorStop(1,"rgba(224,185,60,0)");
+      x.fillStyle=lg;x.fillRect(W/2-dw/2-200,561,160,2);
+      var rg=x.createLinearGradient(W/2+dw/2+40,0,W/2+dw/2+200,0);rg.addColorStop(0,"#e0b93c");rg.addColorStop(1,"rgba(224,185,60,0)");
+      x.fillStyle=rg;x.fillRect(W/2+dw/2+40,561,160,2);
+    }
+    var base=1180,pw=290,slots=[[234,e.n2,e.b2,250,["#ffffff","#d5d9df","#8b93a0"],"#d5d9df","2"],[540,e.n1,e.b1,340,["#fff0a8","#e8c24a","#b88a1c"],"#e0b93c","1"],[846,e.n3,e.b3,180,["#f6c08a","#cd7f32","#8a4f1f"],"#d98f52","3"]];
     slots.forEach(function(s){
       var top=base-s[3];
       x.save();if(s[6]=="1"){x.shadowColor="rgba(224,185,60,.7)";x.shadowBlur=50}
@@ -356,10 +361,10 @@ function shareImg(i){
       var ny=top-26;
       if(s[2]){x.fillStyle=s[5];fit(s[2].toUpperCase(),pw,34,"500");x.fillText(s[2].toUpperCase(),s[0],ny);ny-=52}
       x.fillStyle="#f6efdc";fit(s[1],pw,s[6]=="1"?66:56,"700");x.fillText(s[1],s[0],ny);
-      if(s[6]=="1")crown(s[0],ny-150,100);
+      if(s[6]=="1")crown(s[0],ny-137,100);
     });
     x.fillStyle=gg(0,base,W,base+30);x.fillRect(64,base,W-128,26);
-    x.fillStyle="#a69d88";x.font="600 32px "+F;sp("",10);x.fillText("UMA LOVE RACING ASSOCIATION",W/2+5,1246);sp("",0);
+    x.fillStyle="#a69d88";x.font="600 32px "+F;sp("",10);x.fillText("UMA LOVE RACING ASSOCIATION",W/2+5,1274);sp("",0);
     lastCv=cv;
     var can=window.File&&navigator.share&&navigator.canShare;
     openD('<img class="shimg" src="'+cv.toDataURL("image/png")+'" alt="Podium image for '+esc(e.n)+'"><p class="dl">Press and hold the image to save it.</p>'+(can?'<div class="acts"><button class="btn main" id="shgo">Share</button></div>':''));
