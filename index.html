@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var n=performance.getEntriesByType("navigation")[0],t=n?n.type:"navigate";if(t==="navigate"&&!matchMedia("(prefers-reduced-motion:reduce)").matches)document.documentElement.className="intro"}catch(e){}})()</script>
 <title>ULRA Hall of Records</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,8 +28,29 @@ h1,h2,h3,.name,.block,.cond{font-family:"Barlow Condensed","Arial Narrow",system
 header{text-align:center;margin:0 0 30px}
 .crown{width:26px;height:22px;display:block;margin:0 auto 4px;filter:drop-shadow(0 0 6px rgba(224,185,60,.6))}
 header .crown{width:54px;height:44px;margin-bottom:6px}
-h1{margin:0;font-weight:700;font-size:clamp(60px,20vw,100px);line-height:.9;letter-spacing:.06em;padding-left:.06em;background:var(--gg);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 16px rgba(224,185,60,.4));animation:sh 7s linear infinite}
-@keyframes sh{0%{background-position:160% 0}100%{background-position:-60% 0}}
+h1,.glow,.sheen{margin:0;font-weight:700;font-size:clamp(60px,20vw,100px);line-height:.9;letter-spacing:.06em;padding-left:.06em;white-space:nowrap}
+.tw{position:relative;display:inline-block}
+h1{background:linear-gradient(180deg,#fff3b8 0%,#f2cf5b 32%,#c9a02a 60%,#f6dc7a 82%,#b88a1c 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.glow,.sheen{position:absolute;left:0;top:0;pointer-events:none;font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif}
+.glow{color:#f2cf5b;filter:blur(18px);opacity:.38}
+.sheen{background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.95) 50%,transparent 64%) no-repeat;background-size:300% 100%;background-position:-70% 0;-webkit-background-clip:text;background-clip:text;color:transparent}
+html.go .sheen{animation:swp 1.7s cubic-bezier(.45,0,.25,1) .3s 1 both}
+html.go .glow{animation:gfl 1.7s ease-in-out .3s 1 both}
+@keyframes swp{from{background-position:-70% 0}to{background-position:170% 0}}
+@keyframes gfl{0%,100%{opacity:.38}50%{opacity:.95}}
+.star{position:absolute;top:-6px;right:-16px;width:clamp(20px,6.5vw,32px);aspect-ratio:1;opacity:0}
+.star::before{content:"";position:absolute;inset:-70%;background:radial-gradient(circle,rgba(255,240,170,.5),transparent 62%)}
+.star i{position:absolute;inset:0;background:radial-gradient(circle,#ffffff 0%,#fff3b8 45%,#f2cf5b 100%);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+html.go .star{animation:spop .8s cubic-bezier(.2,1.4,.4,1) 1.8s both,twk 3.4s ease-in-out 2.8s infinite}
+@keyframes spop{0%{opacity:0;transform:scale(0) rotate(-90deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes twk{0%,100%{opacity:1;transform:scale(1) rotate(0)}50%{opacity:.65;transform:scale(.78) rotate(18deg)}}
+#veil{display:none;position:fixed;inset:0;z-index:50;background:radial-gradient(ellipse 80% 50% at 50% 38%,rgba(224,185,60,.3),transparent 70%),radial-gradient(circle at 0% 30%,rgba(64,30,120,.55),transparent 46%),radial-gradient(circle at 100% 62%,rgba(64,30,120,.45),transparent 46%),#07060a}
+html.intro #veil{display:block;animation:vsafe 0s linear 10s forwards}
+@keyframes vsafe{to{opacity:0;visibility:hidden}}
+html.fade #veil{opacity:0;transition:opacity 1.4s ease .5s}
+html.intro{overflow:hidden}
+html.intro .tw{z-index:60}
+html.intro:not(.go) .tw{opacity:0}
 .kicker{margin:12px 0 0;font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;font-size:17px;letter-spacing:.42em;text-transform:uppercase;color:var(--ink);padding-left:.42em}
 .orn{display:flex;align-items:center;justify-content:center;gap:10px;margin:16px 0 0}
 .orn i{display:block;height:1px;width:84px;background:linear-gradient(90deg,transparent,var(--gold))}
@@ -135,15 +157,16 @@ dialog[open]{animation:pop .28s ease}
 .smallshare svg{width:14px;height:14px}
 .smallshare:hover{background:var(--gg);color:#1a1205;border-color:transparent}
 @media (max-width:400px){.rt{align-items:flex-start}.name{font-size:16px}.p1 .name{font-size:19px}.badge{font-size:11px;letter-spacing:.1em}h2{font-size:21px}.head{flex-direction:column;gap:2px}.run .pn{font-size:21px}.orn i{width:56px}}
-@media (prefers-reduced-motion:reduce){h1,.reign{animation:none}}
+@media (prefers-reduced-motion:reduce){.reign,.sheen,.glow{animation:none!important}.star{animation:none!important;opacity:1;transform:none}}
 </style>
 </head>
 <body>
+<div id="veil" aria-hidden="true"></div>
 <main>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="gd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3b8"/><stop offset=".4" stop-color="#f2cf5b"/><stop offset=".7" stop-color="#c9a02a"/><stop offset="1" stop-color="#f6dc7a"/></linearGradient></defs></svg>
 <header>
 <svg class="crown" viewBox="0 0 24 20" aria-hidden="true"><path d="M2 18 L1 5 L7 10 L12 2 L17 10 L23 5 L22 18 Z" fill="url(#gd)"/></svg>
-<h1>ULRA</h1>
+<div class="tw"><span class="glow" aria-hidden="true">ULRA</span><h1>ULRA</h1><span class="sheen" aria-hidden="true">ULRA</span><span class="star" aria-hidden="true"><i></i></span></div>
 <p class="kicker">Hall of Records</p>
 <div class="orn"><i></i><b></b><i></i></div>
 <p class="sub">Uma Love Racing Association</p>
@@ -239,12 +262,14 @@ function parseCT(t){CT={};if(!t)return;csv(t).slice(1).forEach(function(r){var k
 function links(u){return u.split(/\r?\n/).map(function(x){return x.trim()}).filter(function(x){return x.indexOf("http")===0})}
 function get(u){return fetch(u).then(function(r){return r.text()})}
 var IO=window.IntersectionObserver?new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add("in");IO.unobserve(en.target)}})},{threshold:.12}):null;
+function introOn(){return document.documentElement.classList.contains("intro")}
+function observePending(){if(!IO)return;Array.prototype.forEach.call(document.querySelectorAll(".event.rv:not(.in)"),function(el){IO.observe(el)})}
 function reveal(){
   if(!first||!IO)return;
   var els=document.querySelectorAll(".event");
   if(!els.length)return;
   first=false;
-  Array.prototype.forEach.call(els,function(el){el.classList.add("rv");IO.observe(el)});
+  Array.prototype.forEach.call(els,function(el){el.classList.add("rv");if(!introOn())IO.observe(el)});
 }
 
 
@@ -405,5 +430,40 @@ document.addEventListener("click",function(ev){
   if(t.classList.contains("shr")){shareImg(+t.getAttribute("data-i"))}
 });
 </script>
+<script>
+(function(){
+  try{
+    var h=document.documentElement,tw=document.querySelector(".tw"),v=document.getElementById("veil"),ended=false,t1,t2;
+    function go(){h.classList.add("go")}
+    function finish(){
+      if(ended)return;ended=true;clearTimeout(t1);clearTimeout(t2);
+      if(tw){tw.style.transition="none";tw.style.transform=""}
+      h.classList.remove("intro","fade");
+      if(v)v.style.display="none";
+      if(window.observePending)observePending();
+    }
+    function begin(){
+      try{
+        if(!h.classList.contains("intro")||!tw){go();return}
+        var r=tw.getBoundingClientRect(),vw=window.innerWidth,vh=window.innerHeight,
+        k=Math.min(vw*.84/r.width,4.5),dx=vw/2-(r.left+r.width/2),dy=vh/2-(r.top+r.height/2);
+        tw.style.transform="translate("+dx+"px,"+dy+"px) scale("+k+")";
+        go();
+        t1=setTimeout(function(){
+          h.classList.add("fade");
+          tw.style.transition="transform 1.8s cubic-bezier(.65,0,.25,1)";
+          tw.style.transform="translate(0px,0px) scale(1)";
+          t2=setTimeout(finish,1900);
+        },2500);
+      }catch(er){finish();go()}
+    }
+    if(v)v.addEventListener("click",finish);
+    if(tw)tw.addEventListener("click",function(){if(h.classList.contains("intro"))finish()});
+    var fr=(document.fonts&&document.fonts.ready)?Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,1500)})]):Promise.resolve();
+    fr.then(begin,begin);
+  }catch(er){document.documentElement.classList.remove("intro");document.documentElement.classList.add("go")}
+})();
+</script>
+
 </body>
 </html>
