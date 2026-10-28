@@ -40,8 +40,6 @@ h1{font-size:clamp(30px,8vw,46px);line-height:1.05;margin:0 0 8px;color:var(--go
 <p class="foot" id="count"></p>
 </main>
 <script>
-var SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vST8r7p7Yt1evgrF-ppvd0R_F0g6hJ_iVsAr9eYxuEm5wZclZxUr3kQRm1Zv7o6uG6j-ryH-JBw6Iyl/pub?gid=571704424&single=true&output=csv";
-
 var EVENTS=[];
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function csv(t){
@@ -67,14 +65,18 @@ function render(){
   document.getElementById("count").textContent=EVENTS.length+" events on record";
 }
 function msg(t){document.getElementById("events").innerHTML='<p class="empty">'+t+'</p>'}
-if(!SHEET_URL){msg("Sheet link not added yet.")}
-else fetch(SHEET_URL).then(function(r){return r.text()}).then(function(t){
-  var rows=csv(t).slice(1).filter(function(r){return r[0]&&r[0].trim()});
-  EVENTS=rows.reverse().map(function(r){
-    function g(k){return (r[k]||"").trim()}
-    return {n:g(0),d:g(1),n1:g(2),b1:g(3),n2:g(4),b2:g(5),n3:g(6),b3:g(7),all:r.join(" ").toLowerCase()};
+fetch("sheet-link.txt?"+Date.now()).then(function(r){return r.text()}).then(function(u){
+  u=u.trim();
+  if(u.indexOf("http")!==0){msg("Sheet link not added yet.");return}
+  return fetch(u).then(function(r){return r.text()}).then(function(t){
+    if(t.trim().charAt(0)==="<"){msg("That link is not the published CSV link.");return}
+    var rows=csv(t).slice(1).filter(function(r){return r[0]&&r[0].trim()});
+    EVENTS=rows.reverse().map(function(r){
+      function g(k){return (r[k]||"").trim()}
+      return {n:g(0),d:g(1),n1:g(2),b1:g(3),n2:g(4),b2:g(5),n3:g(6),b3:g(7),all:r.join(" ").toLowerCase()};
+    });
+    render();
   });
-  render();
 }).catch(function(){msg("Could not load the results sheet.")});
 document.getElementById("s").addEventListener("input",render);
 </script>
