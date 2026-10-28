@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ULRA Hall of Records</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--card:#141414;--ink:#f4ecd8;--muted:#a89f8a;--gold:#d4af37;--silver:#c8ccd2;--bronze:#cd7f32;--dark:#0a0a0a;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Figtree,system-ui,sans-serif;line-height:1.5}
+main{max-width:720px;margin:0 auto;padding:32px 16px 64px}
+.stripe{height:6px;margin:0 0 20px;background:repeating-linear-gradient(90deg,var(--gold) 0 28px,transparent 28px 40px)}
+h1,h2,.name,.block{font-family:"Josefin Sans",Figtree,system-ui,sans-serif;font-weight:700}
+h1{font-size:clamp(30px,8vw,46px);line-height:1.05;margin:0 0 8px;color:var(--gold)}
+.sub{color:var(--muted);margin:0 0 24px}
+#s{width:100%;font:inherit;padding:10px 12px;border-radius:10px;border:1px solid #3d3214;background:var(--card);color:var(--ink);margin:0 0 20px}
+.event{background:var(--card);border:1px solid var(--gold);box-shadow:0 0 0 1px rgba(212,175,55,.25);border-radius:10px;padding:20px 16px 16px;margin:0 0 20px}
+.event h2{font-size:20px;margin:0}
+.date{color:var(--gold);opacity:.8;font-size:14px;margin:2px 0 18px}
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:8px;align-items:end}
+.slot{display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0}
+.name{font-size:16px;overflow-wrap:anywhere;margin:0 0 4px}
+.badge{font-size:12px;border:1px solid currentColor;border-radius:999px;padding:1px 9px;margin:0 0 8px;overflow-wrap:anywhere}
+.badge:empty{display:none}
+.p1 .badge{color:var(--gold)}.p2 .badge{color:var(--silver)}.p3 .badge{color:var(--bronze)}
+.block{width:100%;border-radius:8px 8px 0 0;display:flex;justify-content:center;padding-top:8px;font-size:24px;color:var(--dark)}
+.p1 .block{height:78px;background:var(--gold)}.p2 .block{height:56px;background:var(--silver)}.p3 .block{height:40px;background:var(--bronze)}
+.foot,.empty{color:var(--muted);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<main>
+<div class="stripe"></div>
+<h1>ULRA Hall of Records</h1>
+<p class="sub">Every Uma Love Racing Association event, with the podium and the badge each winner earned.</p>
+<input id="s" type="search" placeholder="Search events or players" aria-label="Search events or players">
+<div id="events"></div>
+<p class="foot" id="count"></p>
+</main>
+<script>
+var EVENTS=[];
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function person(t){var m=/^(.*?)\s*\((.*)\)\s*$/.exec(t||"");return m?{n:m[1],b:m[2]}:{n:(t||"").trim(),b:""}}
+function slot(c,r,p){return '<div class="slot '+c+'"><p class="name">'+esc(p.n)+'</p><span class="badge">'+esc(p.b)+'</span><div class="block">'+r+'</div></div>'}
+function render(){
+  var q=document.getElementById("s").value.toLowerCase(),h="";
+  EVENTS.forEach(function(e){
+    if(q&&e.all.indexOf(q)<0)return;
+    h+='<section class="event"><h2>'+esc(e.name)+'</h2><p class="date">'+esc(e.date)+'</p><div class="podium">'+slot("p2",2,e.p2)+slot("p1",1,e.p1)+slot("p3",3,e.p3)+'</div></section>';
+  });
+  document.getElementById("events").innerHTML=h||'<p class="empty">No events found.</p>';
+  document.getElementById("count").textContent=EVENTS.length+" events on record";
+}
+fetch("events.txt?"+Date.now()).then(function(r){return r.text()}).then(function(t){
+  EVENTS=t.split("\n").map(function(l){return l.trim()}).filter(function(l){return l&&l.indexOf("#")!==0}).map(function(l){
+    var p=l.split("|").map(function(x){return x.trim()});
+    return {name:p[0]||"",date:p[1]||"",p1:person(p[2]),p2:person(p[3]),p3:person(p[4]),all:l.toLowerCase()};
+  });
+  render();
+}).catch(function(){document.getElementById("events").innerHTML='<p class="empty">Could not load events.txt</p>'});
+document.getElementById("s").addEventListener("input",render);
+</script>
+</body>
+</html>
