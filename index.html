@@ -341,17 +341,14 @@ function parseName(c){
 }
 function runs(a){var r=[],i=0,j;while(i<a.length){j=i;while(j+1<a.length&&a[j+1]==a[j]+1)j++;r.push([a[i],a[j]]);i=j+1}return r}
 function build(t){
-  var allRows=csv(t);
-  var header=(allRows[0]||[]).map(function(h){return h.trim().toLowerCase()});
-  var ytIdx=header.indexOf("youtube");
-  var rows=allRows.slice(1).filter(function(r){return r[0]&&r[0].trim()}),ys={};
+  var rows=csv(t).slice(1).filter(function(r){return r[0]&&r[0].trim()}),ys={};
   var ords=rows.map(function(r){var v=parseFloat((r[8]||"").trim());return isNaN(v)?null:v});
   if(ords.length&&ords.every(function(v){return v!==null})){rows=rows.map(function(r,i){return {r:r,o:ords[i],i:i}}).sort(function(a,b){return a.o-b.o||a.i-b.i}).map(function(x){return x.r})}
   var G=[];
   rows.forEach(function(r){
     function g(k){return (r[k]||"").trim()}
     var pr=parseName(g(0));
-    var videoUrl=(ytIdx>=0&&r[ytIdx])?r[ytIdx].trim():"";
+    var videoUrl=(r[9]||"").trim();
     var row={base:pr.base,label:pr.label,code:pr.code,d:g(1),n1:g(2),b1:g(3),n2:g(4),b2:g(5),n3:g(6),b3:g(7),video:videoUrl,raw:r.join(" ").toLowerCase()};
     var last=G[G.length-1],key=norm(pr.base)+"|"+norm(g(1));
     if(last&&last.key===key)last.rows.push(row);else G.push({key:key,rows:[row]});
