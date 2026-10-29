@@ -182,7 +182,9 @@ html.intro:not(.go) .tw{opacity:0}
 .stat{margin:8px 0 0;font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);padding-left:.3em}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
 button:focus-visible,summary:focus-visible,#s:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-.pn:hover{text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
+.pn{cursor:pointer;text-decoration:underline dotted rgba(224,185,60,.38);text-underline-offset:4px;transition:text-decoration-color .2s,opacity .2s}
+.pn:hover{text-decoration:underline solid var(--gold);text-underline-offset:4px}
+.hint-tip{margin:8px auto 0;font-family:"Barlow Condensed",system-ui,sans-serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:rgba(224,185,60,.82);display:inline-block;padding:3px 12px;border-radius:20px;background:rgba(224,185,60,.06);border:1px solid rgba(224,185,60,.22)}
 #top{margin:0 0 30px}
 .label{margin:26px 0 14px;text-align:center;font-weight:600;font-size:15px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);padding-left:.42em}
 .reign{position:relative;text-align:center;padding:20px 12px 18px;border:1px solid transparent;background:linear-gradient(180deg,#1a1126,#0c0911) padding-box,var(--gg) border-box;box-shadow:0 6px 22px rgba(0,0,0,.45)}
@@ -287,6 +289,63 @@ dialog[open]{animation:pop .28s ease}
 .smallshare:hover{background:var(--gg);color:#1a1205;border-color:transparent}
 @media (max-width:400px){.rt{align-items:flex-start}.name{font-size:16px}.p1 .name{font-size:19px}.badge{font-size:11px;letter-spacing:.1em}h2{font-size:21px}.head{flex-direction:column;gap:2px}.run .pn{font-size:21px}.orn i{width:56px}}
 @media (prefers-reduced-motion:reduce){.sheen,.sp{animation:none!important}.cm{display:none}.star{animation:none!important;opacity:1;transform:none}}
+@media (min-width: 800px) {
+  main {
+    max-width: 900px;
+    padding: 48px 24px 96px;
+  }
+  .event {
+    padding: 28px 24px 0;
+    margin: 0 0 28px;
+  }
+  h2 {
+    font-size: 30px;
+  }
+  .date {
+    font-size: 17px;
+  }
+  .name {
+    font-size: 22px;
+  }
+  .p1 .name {
+    font-size: 26px;
+  }
+  .badge {
+    font-size: 15px;
+  }
+  .p1 .block {
+    height: 110px;
+    font-size: 38px;
+  }
+  .p2 .block {
+    height: 78px;
+    font-size: 36px;
+  }
+  .p3 .block {
+    height: 56px;
+    font-size: 34px;
+  }
+  .reign .pn {
+    font-size: 58px;
+  }
+  .champ .pn {
+    font-size: 46px;
+  }
+  .run .pn {
+    font-size: 28px;
+  }
+  .wins {
+    font-size: 20px;
+  }
+  #s {
+    font-size: 18px;
+    padding: 14px 4px;
+  }
+  .smallshare {
+    font-size: 15px;
+    padding: 6px 14px;
+  }
+}
 </style>
 </head>
 <body>
@@ -298,10 +357,11 @@ dialog[open]{animation:pop .28s ease}
 <p class="kicker">Hall of Records</p>
 <div class="orn"><i></i><b></b><i></i></div>
 <p class="sub">Uma Love Racing Association</p>
+<div style="text-align:center"><span class="hint-tip">✦ Tap any trainer for career records ✦</span></div>
 <p class="stat" id="stat"></p>
 </header>
 <div id="top"></div>
-<input id="s" type="search" placeholder="Search events or players" aria-label="Search events or players">
+<input id="s" type="search" placeholder="Search events, or tap any trainer..." aria-label="Search events or players">
 <button id="clr" hidden>Show all events</button>
 <div id="tools"></div>
 <div id="events"><p class="empty">Loading results...</p></div>
