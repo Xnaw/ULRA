@@ -282,7 +282,7 @@ dialog[open]{animation:pop .28s ease}
 @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.97)}}
 @media (prefers-reduced-motion:reduce){.event.rv,.event.rv .block,.event.rv .slot>*{opacity:1!important;transform:none!important;clip-path:none!important;transition:none!important}dialog[open]{animation:none}}
 .rt{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
-.smallshare{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border:1px solid var(--gold);color:var(--gold);background:rgba(224,185,60,.08);font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;line-height:1.2}
+.smallshare{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border:1px solid var(--gold);color:var(--gold);background:rgba(224,185,60,.08);font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;line-height:1.2;text-decoration:none}
 .smallshare svg{width:14px;height:14px}
 .smallshare:hover{background:var(--gg);color:#1a1205;border-color:transparent}
 @media (max-width:400px){.rt{align-items:flex-start}.name{font-size:16px}.p1 .name{font-size:19px}.badge{font-size:11px;letter-spacing:.1em}h2{font-size:21px}.head{flex-direction:column;gap:2px}.run .pn{font-size:21px}.orn i{width:56px}}
@@ -341,13 +341,18 @@ function parseName(c){
 }
 function runs(a){var r=[],i=0,j;while(i<a.length){j=i;while(j+1<a.length&&a[j+1]==a[j]+1)j++;r.push([a[i],a[j]]);i=j+1}return r}
 function build(t){
-  var rows=csv(t).slice(1).filter(function(r){return r[0]&&r[0].trim()}),ys={};
+  var allRows=csv(t);
+  var header=(allRows[0]||[]).map(function(h){return h.trim().toLowerCase()});
+  var ytIdx=header.indexOf("youtube");
+  var rows=allRows.slice(1).filter(function(r){return r[0]&&r[0].trim()}),ys={};
   var ords=rows.map(function(r){var v=parseFloat((r[8]||"").trim());return isNaN(v)?null:v});
   if(ords.length&&ords.every(function(v){return v!==null})){rows=rows.map(function(r,i){return {r:r,o:ords[i],i:i}}).sort(function(a,b){return a.o-b.o||a.i-b.i}).map(function(x){return x.r})}
   var G=[];
   rows.forEach(function(r){
     function g(k){return (r[k]||"").trim()}
-    var pr=parseName(g(0)),row={base:pr.base,label:pr.label,code:pr.code,d:g(1),n1:g(2),b1:g(3),n2:g(4),b2:g(5),n3:g(6),b3:g(7),raw:r.join(" ").toLowerCase()};
+    var pr=parseName(g(0));
+    var videoUrl=(ytIdx>=0&&r[ytIdx])?r[ytIdx].trim():"";
+    var row={base:pr.base,label:pr.label,code:pr.code,d:g(1),n1:g(2),b1:g(3),n2:g(4),b2:g(5),n3:g(6),b3:g(7),video:videoUrl,raw:r.join(" ").toLowerCase()};
     var last=G[G.length-1],key=norm(pr.base)+"|"+norm(g(1));
     if(last&&last.key===key)last.rows.push(row);else G.push({key:key,rows:[row]});
   });
@@ -443,7 +448,9 @@ function selIx(e){var ix=SEL[e.key];if(!e.races)return 0;if(ix==null||ix>=e.race
 function rowOf(e){return e.races?e.races[selIx(e)]:e.fin}
 function slot(c,r,n,b){return '<div class="slot '+c+'">'+(r==1&&nm(n).length?CROWN:"")+pns(n,"name")+bdgs(b)+'<div class="block">'+r+'</div></div>'}
 function cardHtml(e){
-  var rw=rowOf(e),h='<section class="event" data-i="'+e.i+'"><div class="head"><h2>'+esc(e.n)+'</h2><div class="rt"><span class="date">'+esc(e.d)+'</span><button class="shr smallshare" data-i="'+e.i+'">'+SHI+'Share</button></div></div>';
+  var rw=rowOf(e);
+  var watchBtn = rw.video ? '<a href="'+esc(rw.video)+'" target="_blank" class="smallshare" rel="noopener">Watch Full Event</a>' : '';
+  var h='<section class="event" data-i="'+e.i+'"><div class="head"><h2>'+esc(e.n)+'</h2><div class="rt"><span class="date">'+esc(e.d)+'</span>'+watchBtn+'<button class="shr smallshare" data-i="'+e.i+'">'+SHI+'Share</button></div></div>';
   if(e.races){
     var si=selIx(e);
     h+='<div class="rsel">'+e.races.map(function(r,ix){return '<button class="rc'+(ix==si?" on":"")+'" data-e="'+e.i+'" data-r="'+ix+'">'+esc(rlab(r,ix))+'</button>'}).join("")+'</div>';
@@ -584,7 +591,7 @@ try{var c0=localStorage.getItem(KEY);if(c0){build(c0);parseCT(localStorage.getIt
 fetch("sheet-link.txt?"+Date.now()).then(function(r){return r.text()}).then(function(u){
   var L=links(u);
   if(!L.length){msg("Sheet link not added yet.");return}
-  return Promise.all([get(L[0]),L[1]?get(L[1]).catch(function(){return ""}):Promise.resolve("")]).then(function(R){
+  return Promise.all([get(L[0]),L[1]?get(L[1]).catch(function(){return ""}):Promise.resolve("")].then(function(R){
     var t=R[0],tt=R[1];
     if(t.trim().charAt(0)==="<"){msg("That link is not the published CSV link.");return}
     if(tt.trim().charAt(0)==="<")tt="";
