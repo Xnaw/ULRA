@@ -346,6 +346,11 @@ dialog[open]{animation:pop .28s ease}
     padding: 6px 14px;
   }
 }
+
+.ulra-topnav{display:flex;justify-content:center;gap:8px;margin:0 auto 24px;flex-wrap:wrap;position:relative;z-index:20}
+.ulra-navlink{font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:600;font-size:14px;letter-spacing:.22em;text-transform:uppercase;padding:7px 18px;border:1px solid var(--goldline);color:var(--gold);text-decoration:none;background:rgba(15,13,18,.78);transition:all .2s ease;display:inline-flex;align-items:center;gap:7px}
+.ulra-navlink:hover{border-color:var(--gold);background:rgba(224,185,60,.12)}
+.ulra-navlink.active{background:var(--gg);color:#1a1205;border-color:transparent;box-shadow:0 0 18px rgba(224,185,60,.3)}
 </style>
 </head>
 <body>
@@ -353,6 +358,10 @@ dialog[open]{animation:pop .28s ease}
 <main>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="gd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3b8"/><stop offset=".4" stop-color="#f2cf5b"/><stop offset=".7" stop-color="#c9a02a"/><stop offset="1" stop-color="#f6dc7a"/></linearGradient></defs></svg>
 <header>
+<nav class="ulra-topnav" aria-label="Site sections">
+  <a href="index.html" class="ulra-navlink active">★ Hall of Records</a>
+  <a href="tracker.html" class="ulra-navlink">✦ Work Tracker</a>
+</nav>
 <div class="tw"><div class="cw"><svg class="crown" viewBox="0 0 24 20" aria-hidden="true"><path d="M2 18 L1 5 L7 10 L12 2 L17 10 L23 5 L22 18 Z" fill="url(#gd)"/></svg><span class="star" aria-hidden="true"><span class="cm"><svg viewBox="0 0 100 40"><defs><linearGradient id="ct" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff3b8" stop-opacity="0"/><stop offset="1" stop-color="#fff6d0" stop-opacity=".95"/></linearGradient></defs><path d="M100 16 C70 0 34 6 0 34 C36 18 72 32 100 24 Z" fill="url(#ct)"/></svg></span><span class="sp"><i></i></span></span></div><div class="ul"><h1>ULRA</h1><span class="sheen" aria-hidden="true">ULRA</span></div></div>
 <p class="kicker">Hall of Records</p>
 <div class="orn"><i></i><b></b><i></i></div>

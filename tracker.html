@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ULRA Work Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --stars: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Ccircle cx='235.6' cy='290.6' r='1.5' fill='rgb(255,226,190)' fill-opacity='0.45'/%3E%3Ccircle cx='441.8' cy='101.2' r='1.5' fill='rgb(255,226,190)' fill-opacity='0.48'/%3E%3Ccircle cx='410.0' cy='52.2' r='0.7' fill='rgb(255,226,190)' fill-opacity='0.30'/%3E%3Ccircle cx='418.5' cy='359.0' r='0.5' fill='rgb(200,220,255)' fill-opacity='0.50'/%3E%3Ccircle cx='498.0' cy='338.8' r='1.0' fill='rgb(255,226,190)' fill-opacity='0.55'/%3E%3Ccircle cx='11.7' cy='274.5' r='0.5' fill='white' fill-opacity='0.22'/%3E%3Ccircle cx='311.0' cy='402.4' r='0.7' fill='white' fill-opacity='0.45'/%3E%3Ccircle cx='269.8' cy='331.8' r='0.8' fill='white' fill-opacity='0.22'/%3E%3Ccircle cx='238.2' cy='146.4' r='1.0' fill='white' fill-opacity='0.75'/%3E%3Ccircle cx='366.4' cy='165.4' r='0.6' fill='white' fill-opacity='0.48'/%3E%3Ccircle cx='40.0' cy='396.3' r='0.8' fill='rgb(255,244,214)' fill-opacity='0.28'/%3E%3Ccircle cx='201.9' cy='494.5' r='1.5' fill='white' fill-opacity='0.55'/%3E%3Ccircle cx='111.4' cy='470.1' r='0.8' fill='rgb(200,220,255)' fill-opacity='0.40'/%3E%3Ccircle cx='218.9' cy='293.9' r='0.6' fill='rgb(255,244,214)' fill-opacity='0.60'/%3E%3Ccircle cx='176.5' cy='163.3' r='0.5' fill='white' fill-opacity='0.70'/%3E%3Ccircle cx='95.0' cy='290.4' r='0.8' fill='white' fill-opacity='0.48'/%3E%3Ccircle cx='4.2' cy='446.5' r='1.5' fill='white' fill-opacity='0.52'/%3E%3Ccircle cx='111.9' cy='205.9' r='1.5' fill='rgb(255,226,190)' fill-opacity='0.52'/%3E%3Ccircle cx='194.3' cy='236.0' r='1.0' fill='rgb(255,226,190)' fill-opacity='0.46'/%3E%3C/svg%3E"),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='313' height='313'%3E%3Ccircle cx='171.2' cy='109.5' r='0.7' fill='rgb(255,244,214)' fill-opacity='0.26'/%3E%3Ccircle cx='202.9' cy='248.9' r='0.5' fill='rgb(255,244,214)' fill-opacity='0.72'/%3E%3Ccircle cx='283.8' cy='169.4' r='0.6' fill='white' fill-opacity='0.44'/%3E%3Ccircle cx='95.0' cy='160.1' r='0.6' fill='rgb(200,220,255)' fill-opacity='0.62'/%3E%3Ccircle cx='265.5' cy='84.5' r='0.7' fill='rgb(255,226,190)' fill-opacity='0.60'/%3E%3Ccircle cx='300.6' cy='10.7' r='0.8' fill='white' fill-opacity='0.68'/%3E%3Ccircle cx='137.1' cy='92.5' r='0.5' fill='white' fill-opacity='0.70'/%3E%3Ccircle cx='268.0' cy='65.5' r='0.6' fill='white' fill-opacity='0.70'/%3E%3C/svg%3E");
+  --bg: #05050a;
+  --card: #0c0a12;
+  --ink: #f6efdc;
+  --muted: #9e9582;
+  --gold: #e0b93c;
+  --goldline: rgba(224, 185, 60, 0.42);
+  --gg: linear-gradient(135deg, #fff3b8 0%, #f2cf5b 28%, #c9a02a 55%, #f6dc7a 78%, #a9801c 100%);
+  
+  /* Status Square Colors */
+  --green: #22c55e;
+  --green-bg: rgba(34, 197, 94, 0.08);
+  --green-glow: rgba(34, 197, 94, 0.28);
+
+  --yellow: #eab308;
+  --yellow-bg: rgba(234, 179, 8, 0.08);
+  --yellow-glow: rgba(234, 179, 8, 0.28);
+
+  --red: #ef4444;
+  --red-bg: rgba(239, 68, 68, 0.08);
+  --red-glow: rgba(239, 68, 68, 0.28);
+
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: Barlow, system-ui, sans-serif;
+  line-height: 1.5;
+  background-color: var(--bg);
+  background-image:
+    var(--stars),
+    radial-gradient(ellipse 90% 35% at 50% 0%, rgba(224, 185, 60, 0.10), transparent 70%),
+    radial-gradient(ellipse 65% 30% at 12% 22%, rgba(70, 42, 145, 0.22), transparent 70%),
+    radial-gradient(ellipse 55% 28% at 90% 48%, rgba(25, 68, 120, 0.18), transparent 70%);
+  background-size: 520px 520px, 313px 313px, 100% 1000px, 100% 1000px, 100% 1000px;
+  background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat;
+}
+main {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 34px 16px 84px;
+}
+h1, h2, h3, .cond {
+  font-family: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+}
+button, input, select {
+  font: inherit;
+  color: inherit;
+}
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Shared ULRA Top Nav */
+.ulra-topnav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 24px;
+  flex-wrap: wrap;
+}
+.ulra-navlink {
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  padding: 7px 18px;
+  border: 1px solid var(--goldline);
+  color: var(--gold);
+  text-decoration: none;
+  background: rgba(15, 13, 18, 0.82);
+  transition: all .2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.ulra-navlink:hover {
+  border-color: var(--gold);
+  background: rgba(224, 185, 60, 0.12);
+}
+.ulra-navlink.active {
+  background: var(--gg);
+  color: #1a1205;
+  border-color: transparent;
+  box-shadow: 0 0 18px rgba(224, 185, 60, 0.28);
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin: 0 0 28px;
+}
+.cw {
+  width: 50px;
+  margin: 0 auto 4px;
+}
+.crown {
+  width: 50px;
+  height: 40px;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 10px rgba(224, 185, 60, 0.35));
+}
+h1 {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(50px, 15vw, 84px);
+  line-height: 0.92;
+  letter-spacing: .06em;
+  padding-left: .06em;
+  background: linear-gradient(180deg, #fff3b8 0%, #f2cf5b 32%, #c9a02a 60%, #f6dc7a 82%, #b88a1c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.kicker {
+  margin: 8px 0 0;
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding-left: .38em;
+}
+.orn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 14px 0 0;
+}
+.orn i {
+  display: block;
+  height: 1px;
+  width: 84px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+.orn i:last-child {
+  background: linear-gradient(270deg, transparent, var(--gold));
+}
+.orn b {
+  display: block;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+  background: var(--gg);
+  box-shadow: 0 0 10px rgba(224, 185, 60, 0.7);
+}
+.sub {
+  color: var(--muted);
+  font-size: 14px;
+  max-width: 560px;
+  margin: 10px auto 0;
+}
+.stat-line {
+  margin: 8px 0 0;
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Status Legend & Quick Filter Squares */
+.legend-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 0 0 22px;
+}
+.legend-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: #0c0a12;
+  border: 2px solid rgba(255,255,255,0.12);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+  text-align: left;
+}
+.legend-card:hover {
+  transform: translateY(-2px);
+}
+.legend-card.st-completed {
+  border-color: var(--green);
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.10), #0a0d0b);
+}
+.legend-card.st-completed.active {
+  box-shadow: 0 0 20px var(--green-glow);
+}
+.legend-card.st-ongoing {
+  border-color: var(--yellow);
+  background: linear-gradient(180deg, rgba(234, 179, 8, 0.10), #0e0c08);
+}
+.legend-card.st-ongoing.active {
+  box-shadow: 0 0 20px var(--yellow-glow);
+}
+.legend-card.st-delayed {
+  border-color: var(--red);
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.10), #11090a);
+}
+.legend-card.st-delayed.active {
+  box-shadow: 0 0 20px var(--red-glow);
+}
+.leg-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sq-indicator {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border: 2px solid currentColor;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+.leg-title {
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  display: block;
+  line-height: 1.1;
+}
+.leg-sub {
+  font-size: 11px;
+  color: var(--muted);
+  display: block;
+}
+.leg-count {
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
+}
+
+/* Category Tabs & Controls */
+.tabs-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0 0 14px;
+}
+.tab-pill {
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid var(--goldline);
+  color: var(--gold);
+  background: #0b0910;
+  transition: all .15s;
+}
+.tab-pill:hover {
+  border-color: var(--gold);
+  background: rgba(224, 185, 60, 0.1);
+}
+.tab-pill.on {
+  background: var(--gg);
+  color: #1a1205;
+  border-color: transparent;
+  font-weight: 700;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(224, 185, 60, 0.22);
+}
+.search-box {
+  flex: 1 1 220px;
+  padding: 9px 12px;
+  background: #0b0910;
+  border: 1px solid var(--goldline);
+  color: var(--ink);
+  font-size: 15px;
+}
+.search-box::placeholder {
+  color: var(--muted);
+}
+.tool-btn {
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 9px 14px;
+  border: 1px solid var(--goldline);
+  color: var(--gold);
+  background: #0b0910;
+}
+.tool-btn:hover {
+  border-color: var(--gold);
+  background: rgba(224, 185, 60, 0.12);
+}
+
+/* UMA.MOE STYLE CHRONOLOGICAL TIMELINE */
+.timeline-wrap {
+  position: relative;
+}
+.tl-group {
+  display: grid;
+  grid-template-columns: 150px 28px 1fr;
+  gap: 0;
+  position: relative;
+  padding-bottom: 26px;
+}
+.tl-group:last-child {
+  padding-bottom: 0;
+}
+
+/* Left Column: Date & Relative Delta */
+.tl-date-col {
+  text-align: right;
+  padding-right: 16px;
+  padding-top: 4px;
+}
+.tl-date-main {
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.tl-date-rel {
+  display: inline-block;
+  margin-top: 4px;
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 1px 7px;
+  background: rgba(224, 185, 60, 0.1);
+  border: 1px solid rgba(224, 185, 60, 0.3);
+  color: var(--gold);
+}
+.tl-ev-count {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Center Column: Spine & Node */
+.tl-axis-col {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.tl-axis-col::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: -26px;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, var(--gold), rgba(224, 185, 60, 0.22));
+}
+.tl-group:last-child .tl-axis-col::before {
+  bottom: 0;
+}
+.tl-node {
+  width: 14px;
+  height: 14px;
+  margin-top: 8px;
+  background: #05050a;
+  border: 2px solid var(--gold);
+  transform: rotate(45deg);
+  z-index: 2;
+  box-shadow: 0 0 10px rgba(224, 185, 60, 0.6);
+}
+
+/* Right Column: Event Cards Stack */
+.tl-cards-col {
+  padding-left: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* THE STATUS SQUARE CARDS (Green / Yellow / Red) */
+.work-card {
+  position: relative;
+  background: linear-gradient(180deg, #12101b 0%, #09080e 100%);
+  padding: 16px 18px;
+  border: 2px solid var(--goldline);
+  transition: transform .16s ease, box-shadow .2s ease;
+}
+.work-card:hover {
+  transform: translateX(3px);
+}
+
+/* Completed -> Green Square */
+.work-card.sq-completed {
+  border: 2px solid var(--green);
+  box-shadow: 0 0 16px var(--green-glow), inset 0 0 22px var(--green-bg);
+}
+/* Ongoing -> Yellow Square */
+.work-card.sq-ongoing {
+  border: 2px solid var(--yellow);
+  box-shadow: 0 0 16px var(--yellow-glow), inset 0 0 22px var(--yellow-bg);
+}
+/* Delayed / Indefinite -> Red Square */
+.work-card.sq-delayed {
+  border: 2px solid var(--red);
+  box-shadow: 0 0 16px var(--red-glow), inset 0 0 22px var(--red-bg);
+}
+
+.wc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.wc-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.cat-tag {
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--ink);
+}
+.duration-tag {
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: .08em;
+  color: var(--muted);
+}
+
+.status-square-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border: 2px solid currentColor;
+}
+.status-square-badge i {
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  display: inline-block;
+}
+.badge-completed { color: var(--green); background: var(--green-bg); }
+.badge-ongoing { color: var(--yellow); background: var(--yellow-bg); }
+.badge-delayed { color: var(--red); background: var(--red-bg); }
+
+.wc-title {
+  margin: 4px 0 6px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.wc-desc {
+  margin: 0;
+  font-size: 14px;
+  color: #cfc6b4;
+  line-height: 1.5;
+}
+.wc-details {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: rgba(5, 5, 10, 0.78);
+  border-left: 2px solid var(--gold);
+  font-size: 13px;
+  color: var(--muted);
+}
+.info-btn {
+  margin-top: 8px;
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: inline-block;
+}
+.info-btn:hover {
+  text-decoration: underline;
+}
+
+/* Today Marker Divider */
+.today-marker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0 24px;
+}
+.today-marker i {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.today-pill {
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  background: var(--gg);
+  color: #1a1205;
+  box-shadow: 0 0 16px rgba(224, 185, 60, 0.4);
+}
+
+.empty {
+  text-align: center;
+  padding: 42px 16px;
+  color: var(--muted);
+  border: 1px dashed var(--goldline);
+}
+.foot {
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+  letter-spacing: .04em;
+  margin: 38px 0 0;
+}
+
+@media (max-width: 680px) {
+  .legend-bar { grid-template-columns: 1fr; }
+  .tl-group {
+    grid-template-columns: 24px 1fr;
+  }
+  .tl-date-col {
+    grid-column: 2;
+    text-align: left;
+    padding: 0 0 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .tl-axis-col {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+  .tl-cards-col {
+    grid-column: 2;
+    padding-left: 12px;
+  }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gd" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff3b8"/>
+      <stop offset=".4" stop-color="#f2cf5b"/>
+      <stop offset=".7" stop-color="#c9a02a"/>
+      <stop offset="1" stop-color="#f6dc7a"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<main>
+  <header>
+    <nav class="ulra-topnav" aria-label="Site sections">
+      <a href="index.html" class="ulra-navlink">★ Hall of Records</a>
+      <a href="tracker.html" class="ulra-navlink active">✦ Work Tracker</a>
+    </nav>
+
+    <div class="cw">
+      <svg class="crown" viewBox="0 0 24 20" aria-hidden="true">
+        <path d="M2 18 L1 5 L7 10 L12 2 L17 10 L23 5 L22 18 Z" fill="url(#gd)"/>
+      </svg>
+    </div>
+    <h1>ULRA</h1>
+    <p class="kicker">ULRA Work Tracker</p>
+    <div class="orn"><i></i><b></b><i></i></div>
+    <p class="sub">Uma Love Racing Association • Chronological Roadmap & Club Operations</p>
+    <p class="stat-line" id="statLine"></p>
+  </header>
+
+  <!-- Color-Coded Square Status Filter Bar -->
+  <section class="legend-bar" id="legendBar" aria-label="Filter by status square"></section>
+
+  <!-- Dynamic Category Tabs (auto-generated from Google Sheet) -->
+  <nav class="tabs-bar" id="catTabs" aria-label="Category filter"></nav>
+
+  <!-- Search & Chronological Sort Controls -->
+  <div class="toolbar">
+    <input type="search" id="searchInput" class="search-box" placeholder="Search timeline events, dates, or categories..." aria-label="Search timeline">
+    <button type="button" class="tool-btn" id="btnSortDir">Order: Chronological ↑</button>
+    <button type="button" class="tool-btn" id="btnJumpToday">Jump to Today</button>
+  </div>
+
+  <!-- Main Chronological Timeline -->
+  <div class="timeline-wrap" id="timelineContainer">
+    <p class="empty">Loading work tracker timeline...</p>
+  </div>
+
+  <noscript><p class="empty">This page needs JavaScript turned on to load the Google Sheet timeline.</p></noscript>
+  <p class="foot" id="updStatus"></p>
+</main>
+
+<script>
+(function(){
+  var CACHE_KEY = "ulra-work-tracker-csv-v1";
+  var ITEMS = [];
+  var CATEGORIES = [];
+  var activeStatus = "all"; // "all" | "completed" | "ongoing" | "delayed"
+  var activeCat = "all";
+  var searchQuery = "";
+  var sortAsc = true; // true = chronological (oldest -> newest)
+  var openDetails = {};
+  var done = false;
+
+  setTimeout(function(){
+    if (!done && !ITEMS.length) {
+      document.getElementById("timelineContainer").innerHTML = '<p class="empty">Taking too long to load. Make sure your published Google Sheet CSV link is in tracker-link.txt (or line 3 of sheet-link.txt).</p>';
+    }
+  }, 8000);
+
+  function esc(s) {
+    return String(s || "").replace(/[&<>"]/g, function(c) {
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+    });
+  }
+
+  // Exact same CSV parser used by ULRA Hall of Records
+  function csv(t) {
+    var rows = [], r = [], f = "", q = false, i, c;
+    for (i = 0; i < t.length; i++) {
+      c = t[i];
+      if (q) {
+        if (c === '"') {
+          if (t[i + 1] === '"') { f += '"'; i++; }
+          else q = false;
+        } else f += c;
+      } else if (c === '"') q = true;
+      else if (c === ",") { r.push(f); f = ""; }
+      else if (c === "
+") { r.push(f); rows.push(r); r = []; f = ""; }
+      else if (c !== "") f += c;
+    }
+    if (f !== "" || r.length) { r.push(f); rows.push(r); }
+    return rows;
+  }
+
+  // Normalize flexible status text from Google Sheet into the 3 square states
+  function normalizeStatus(raw) {
+    var s = String(raw || "").toLowerCase().trim();
+    if (s.indexOf("comp") >= 0 || s.indexOf("done") >= 0 || s.indexOf("fix") >= 0 || s.indexOf("green") >= 0 || s.indexOf("finish") >= 0) {
+      return "completed";
+    }
+    if (s.indexOf("delay") >= 0 || s.indexOf("red") >= 0 || s.indexOf("hold") >= 0 || s.indexOf("indef") >= 0 || s.indexOf("cancel") >= 0 || s.indexOf("block") >= 0) {
+      return "delayed";
+    }
+    return "ongoing";
+  }
+
+  // Normalize flexible date formats (YYYY-MM-DD, MM/DD/YYYY, Oct 30 2026, etc.) into YYYY-MM-DD for chronological sorting
+  function normalizeDate(raw) {
+    var s = String(raw || "").trim();
+    if (!s) return "";
+    if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(s)) {
+      var p = s.split("-");
+      return p[0] + "-" + p[1].padStart(2, "0") + "-" + p[2].padStart(2, "0");
+    }
+    var d = new Date(s);
+    if (!isNaN(d.getTime())) {
+      return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    }
+    return s;
+  }
+
+  function parseLocalDate(isoStr) {
+    if (!isoStr || !/^\d{4}-\d{2}-\d{2}$/.test(isoStr)) return null;
+    var p = isoStr.split("-");
+    return new Date(+p[0], (+p[1] || 1) - 1, +p[2] || 1);
+  }
+
+  function formatShortDate(isoStr, rawFallback) {
+    var d = parseLocalDate(isoStr);
+    if (!d) return rawFallback || isoStr || "TBD";
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  function relativeDaysLabel(isoStr) {
+    var target = parseLocalDate(isoStr);
+    if (!target) return "";
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var diffDays = Math.round((target - today) / 86400000);
+    if (diffDays === 0) return "Today";
+    if (diffDays > 0) return "In " + diffDays + "d";
+    return diffDays + "d";
+  }
+
+  function buildFromCsv(text) {
+    var allRows = csv(text);
+    if (!allRows.length) return;
+
+    // Detect column positions by header names or fallback to standard order:
+    // Standard Columns: Date | End Date | Status | Category | Title | Description | Details
+    var header = (allRows[0] || []).map(function(h) { return String(h || "").toLowerCase().trim(); });
+    var idxDate = header.findIndex(function(h) { return h === "date" || h === "start date" || h === "start"; });
+    var idxEnd = header.findIndex(function(h) { return h.indexOf("end") >= 0; });
+    var idxStatus = header.findIndex(function(h) { return h.indexOf("status") >= 0 || h.indexOf("square") >= 0 || h.indexOf("state") >= 0; });
+    var idxCat = header.findIndex(function(h) { return h.indexOf("cat") >= 0 || h.indexOf("tab") >= 0 || h.indexOf("tag") >= 0 || h.indexOf("type") >= 0; });
+    var idxTitle = header.findIndex(function(h) { return h.indexOf("title") >= 0 || h.indexOf("name") >= 0 || h.indexOf("event") >= 0 || h.indexOf("task") >= 0 || h.indexOf("item") >= 0; });
+    var idxDesc = header.findIndex(function(h) { return h.indexOf("desc") >= 0 || h.indexOf("summary") >= 0; });
+    var idxDet = header.findIndex(function(h) { return h.indexOf("detail") >= 0 || h.indexOf("note") >= 0 || h.indexOf("info") >= 0 || h.indexOf("extra") >= 0; });
+
+    // If standard headers aren't found, assume fixed column order:
+    // Col A (0): Date, Col B (1): End Date, Col C (2): Status, Col D (3): Category, Col E (4): Title, Col F (5): Description, Col G (6): Details
+    if (idxTitle < 0 && idxStatus < 0) {
+      idxDate = 0; idxEnd = 1; idxStatus = 2; idxCat = 3; idxTitle = 4; idxDesc = 5; idxDet = 6;
+    }
+
+    var dataRows = allRows.slice(1).filter(function(r) {
+      return r.some(function(cell) { return String(cell || "").trim() !== ""; });
+    });
+
+    var catSet = {};
+    ITEMS = [];
+    CATEGORIES = [];
+
+    dataRows.forEach(function(r, idx) {
+      function g(colIdx) { return colIdx >= 0 && r[colIdx] !== undefined ? String(r[colIdx]).trim() : ""; }
+      var rawDate = g(idxDate);
+      var rawEnd = g(idxEnd);
+      var rawStatus = g(idxStatus);
+      var rawCat = g(idxCat) || "General";
+      var title = g(idxTitle);
+      var desc = g(idxDesc);
+      var details = g(idxDet);
+
+      if (!title && !desc) return;
+
+      var normD = normalizeDate(rawDate);
+      var normEnd = normalizeDate(rawEnd);
+      var st = normalizeStatus(rawStatus);
+
+      if (!catSet[rawCat.toLowerCase()]) {
+        catSet[rawCat.toLowerCase()] = rawCat;
+        CATEGORIES.push(rawCat);
+      }
+
+      ITEMS.push({
+        id: idx + 1,
+        date: normD || "9999-12-31",
+        rawDate: rawDate || "TBD",
+        endDate: normEnd,
+        rawEnd: rawEnd,
+        status: st,
+        category: catSet[rawCat.toLowerCase()],
+        title: title || "Untitled Update",
+        desc: desc,
+        details: details
+      });
+    });
+  }
+
+  function statusMeta(st) {
+    if (st === "completed") return { sqClass: "sq-completed", badgeClass: "badge-completed", label: "Completed" };
+    if (st === "delayed") return { sqClass: "sq-delayed", badgeClass: "badge-delayed", label: "Delayed / Indefinite" };
+    return { sqClass: "sq-ongoing", badgeClass: "badge-ongoing", label: "Ongoing" };
+  }
+
+  function render() {
+    document.getElementById("btnSortDir").textContent = sortAsc ? "Order: Chronological ↑" : "Order: Newest First ↓";
+    document.getElementById("statLine").textContent = ITEMS.length ? (ITEMS.length + (ITEMS.length === 1 ? " item" : " items") + " on timeline") : "";
+
+    // 1. Render Top 3 Status Square Filter Cards
+    var counts = { completed: 0, ongoing: 0, delayed: 0 };
+    ITEMS.forEach(function(it) {
+      if (counts[it.status] !== undefined) counts[it.status]++;
+    });
+
+    var legDefs = [
+      { key: "completed", cls: "st-completed", color: "var(--green)", title: "Completed", sub: "Green Square • Finished" },
+      { key: "ongoing", cls: "st-ongoing", color: "var(--yellow)", title: "Ongoing", sub: "Yellow Square • Active" },
+      { key: "delayed", cls: "st-delayed", color: "var(--red)", title: "Delayed / Hold", sub: "Red Square • Indefinite" }
+    ];
+
+    document.getElementById("legendBar").innerHTML = legDefs.map(function(ld) {
+      var isAct = activeStatus === ld.key;
+      return '<button type="button" class="legend-card ' + ld.cls + (isAct ? ' active' : '') + '" data-status-filter="' + ld.key + '">' +
+        '<div class="leg-left">' +
+          '<span class="sq-indicator" style="color:' + ld.color + '"></span>' +
+          '<div><span class="leg-title" style="color:' + ld.color + '">' + esc(ld.title) + '</span><span class="leg-sub">' + esc(ld.sub) + '</span></div>' +
+        '</div>' +
+        '<span class="leg-count" style="color:' + ld.color + '">' + (counts[ld.key] || 0) + '</span>' +
+      '</button>';
+    }).join("");
+
+    // 2. Render Category Pills
+    var tabsHtml = '<button type="button" class="tab-pill' + (activeCat === "all" ? " on" : "") + '" data-cat="all">All (' + ITEMS.length + ')</button>';
+    CATEGORIES.forEach(function(cName) {
+      var cnt = ITEMS.filter(function(i) { return i.category === cName; }).length;
+      tabsHtml += '<button type="button" class="tab-pill' + (activeCat === cName ? " on" : "") + '" data-cat="' + esc(cName) + '">' + esc(cName) + ' (' + cnt + ')</button>';
+    });
+    document.getElementById("catTabs").innerHTML = tabsHtml;
+
+    // 3. Filter and Group Chronologically
+    var q = searchQuery.toLowerCase().trim();
+    var filtered = ITEMS.filter(function(it) {
+      if (activeStatus !== "all" && it.status !== activeStatus) return false;
+      if (activeCat !== "all" && it.category !== activeCat) return false;
+      if (q) {
+        var hay = (it.title + " " + it.desc + " " + it.details + " " + it.rawDate + " " + it.category).toLowerCase();
+        if (hay.indexOf(q) < 0) return false;
+      }
+      return true;
+    });
+
+    filtered.sort(function(a, b) {
+      var cmp = String(a.date).localeCompare(String(b.date));
+      if (cmp !== 0) return sortAsc ? cmp : -cmp;
+      return a.id - b.id;
+    });
+
+    if (!filtered.length) {
+      document.getElementById("timelineContainer").innerHTML = '<div class="empty">No timeline entries match your filter.</div>';
+      return;
+    }
+
+    var groups = [];
+    filtered.forEach(function(it) {
+      var dKey = it.date;
+      var last = groups[groups.length - 1];
+      if (last && last.date === dKey) {
+        last.items.push(it);
+      } else {
+        groups.push({ date: dKey, rawDate: it.rawDate, items: [it] });
+      }
+    });
+
+    var now = new Date();
+    var todayIso = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
+    var todayInserted = false;
+    var html = "";
+
+    groups.forEach(function(g) {
+      if (!todayInserted && g.date !== "9999-12-31" && ((sortAsc && g.date >= todayIso) || (!sortAsc && g.date <= todayIso))) {
+        todayInserted = true;
+        html += '<div class="today-marker" id="todayAnchor"><i></i><span class="today-pill">✦ Today • ' + formatShortDate(todayIso) + ' ✦</span><i></i></div>';
+      }
+
+      var rel = relativeDaysLabel(g.date);
+      html += '<section class="tl-group">' +
+        '<div class="tl-date-col">' +
+          '<div class="tl-date-main">' + esc(formatShortDate(g.date, g.rawDate)) + '</div>' +
+          (rel ? '<span class="tl-date-rel">' + esc(rel) + '</span>' : '') +
+          (g.items.length > 1 ? '<span class="tl-ev-count">' + g.items.length + ' items</span>' : '') +
+        '</div>' +
+        '<div class="tl-axis-col"><div class="tl-node"></div></div>' +
+        '<div class="tl-cards-col">' +
+          g.items.map(function(it) {
+            var sm = statusMeta(it.status);
+            var isExp = !!openDetails[it.id];
+            var startDisp = formatShortDate(it.date, it.rawDate);
+            var endDisp = it.endDate ? formatShortDate(it.endDate, it.rawEnd) : "";
+            var rangeStr = endDisp ? (startDisp + " – " + endDisp) : startDisp;
+
+            var detHtml = "";
+            if (it.details && it.details.trim()) {
+              detHtml = '<button type="button" class="info-btn" data-toggle-det="' + it.id + '">' +
+                (isExp ? '▾ Hide Info' : '▸ Info / Details') + '</button>' +
+                (isExp ? '<div class="wc-details">' + esc(it.details) + '</div>' : '');
+            }
+
+            return '<article class="work-card ' + sm.sqClass + '">' +
+              '<div class="wc-head">' +
+                '<div class="wc-badges">' +
+                  '<span class="cat-tag">' + esc(it.category) + '</span>' +
+                  '<span class="duration-tag">' + esc(rangeStr) + '</span>' +
+                '</div>' +
+                '<span class="status-square-badge ' + sm.badgeClass + '"><i></i>' + esc(sm.label) + '</span>' +
+              '</div>' +
+              '<h3 class="wc-title">' + esc(it.title) + '</h3>' +
+              (it.desc ? '<p class="wc-desc">' + esc(it.desc) + '</p>' : '') +
+              detHtml +
+            '</article>';
+          }).join("") +
+        '</div>' +
+      '</section>';
+    });
+
+    if (!todayInserted) {
+      html += '<div class="today-marker" id="todayAnchor"><i></i><span class="today-pill">✦ Today • ' + formatShortDate(todayIso) + ' ✦</span><i></i></div>';
+    }
+
+    document.getElementById("timelineContainer").innerHTML = html;
+  }
+
+  // Event Listeners for Visitor Filtering Only (Zero Admin / Zero Edit Controls)
+  document.getElementById("searchInput").addEventListener("input", function(e) {
+    searchQuery = e.target.value;
+    render();
+  });
+
+  document.getElementById("btnSortDir").addEventListener("click", function() {
+    sortAsc = !sortAsc;
+    render();
+  });
+
+  document.getElementById("btnJumpToday").addEventListener("click", function() {
+    var el = document.getElementById("todayAnchor");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
+  document.addEventListener("click", function(e) {
+    var stBtn = e.target.closest("[data-status-filter]");
+    if (stBtn) {
+      var st = stBtn.getAttribute("data-status-filter");
+      activeStatus = (activeStatus === st) ? "all" : st;
+      render();
+      return;
+    }
+
+    var catBtn = e.target.closest("[data-cat]");
+    if (catBtn) {
+      activeCat = catBtn.getAttribute("data-cat");
+      render();
+      return;
+    }
+
+    var detBtn = e.target.closest("[data-toggle-det]");
+    if (detBtn) {
+      var id = detBtn.getAttribute("data-toggle-det");
+      openDetails[id] = !openDetails[id];
+      render();
+      return;
+    }
+  });
+
+  function parseLinks(txt) {
+    return String(txt || "").split(/?
+/).map(function(x) { return x.trim(); }).filter(function(x) { return x.indexOf("http") === 0; });
+  }
+
+  // Load cached CSV immediately for fast rendering while checking Google Sheets for updates
+  try {
+    var cachedCsv = localStorage.getItem(CACHE_KEY);
+    if (cachedCsv) {
+      buildFromCsv(cachedCsv);
+      if (ITEMS.length) {
+        done = true;
+        render();
+        document.getElementById("updStatus").textContent = "Showing saved timeline. Checking Google Sheets for updates...";
+      }
+    }
+  } catch (er) {}
+
+  // Fetch Google Sheet CSV URL from tracker-link.txt (or fallback to line 3 of sheet-link.txt)
+  fetch("tracker-link.txt?" + Date.now()).then(function(r) {
+    if (!r.ok) throw new Error("No tracker-link.txt");
+    return r.text();
+  }).catch(function() {
+    return fetch("sheet-link.txt?" + Date.now()).then(function(r) { return r.text(); }).then(function(t) {
+      var L = parseLinks(t);
+      return L[2] || "";
+    });
+  }).then(function(linkText) {
+    var links = parseLinks(linkText);
+    var csvUrl = links[0];
+    if (!csvUrl) {
+      done = true;
+      if (!ITEMS.length) {
+        document.getElementById("timelineContainer").innerHTML = '<div class="empty">Google Sheet link not added yet. Paste your published CSV link into <b>tracker-link.txt</b> in your GitHub repository.</div>';
+      }
+      return;
+    }
+    return fetch(csvUrl).then(function(r) { return r.text(); }).then(function(csvText) {
+      if (csvText.trim().charAt(0) === "<") {
+        done = true;
+        if (!ITEMS.length) {
+          document.getElementById("timelineContainer").innerHTML = '<div class="empty">That link is not a published Google Sheet CSV link. In Google Sheets, go to File → Share → Publish to web → CSV.</div>';
+        }
+        return;
+      }
+      buildFromCsv(csvText);
+      done = true;
+      render();
+      document.getElementById("updStatus").textContent = "Updated " + new Date().toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) + ". New Google Sheet edits can take a few minutes to appear.";
+      try { localStorage.setItem(CACHE_KEY, csvText); } catch (er) {}
+    });
+  }).catch(function() {
+    done = true;
+    if (!ITEMS.length) {
+      document.getElementById("timelineContainer").innerHTML = '<div class="empty">Could not load tracker-link.txt. Add tracker-link.txt with your published Google Sheet CSV URL.</div>';
+    } else {
+      document.getElementById("updStatus").textContent = "Could not check for updates. Showing saved timeline.";
+    }
+  });
+})();
+</script>
+</body>
+</html>
