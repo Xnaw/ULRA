@@ -689,9 +689,8 @@ h1 {
         } else f += c;
       } else if (c === '"') q = true;
       else if (c === ",") { r.push(f); f = ""; }
-      else if (c === "
-") { r.push(f); rows.push(r); r = []; f = ""; }
-      else if (c !== "") f += c;
+      else if (c === "\n") { r.push(f); rows.push(r); r = []; f = ""; }
+      else if (c !== "\r") f += c;
     }
     if (f !== "" || r.length) { r.push(f); rows.push(r); }
     return rows;
@@ -987,8 +986,7 @@ h1 {
   });
 
   function parseLinks(txt) {
-    return String(txt || "").split(/?
-/).map(function(x) { return x.trim(); }).filter(function(x) { return x.indexOf("http") === 0; });
+    return String(txt || "").split(/\r?\n/).map(function(x) { return x.trim(); }).filter(function(x) { return x.indexOf("http") === 0; });
   }
 
   // Load cached CSV immediately for fast rendering while checking Google Sheets for updates
