@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){try{var n=performance.getEntriesByType("navigation")[0],t=n?n.type:"navigate";if(t==="navigate"&&!matchMedia("(prefers-reduced-motion:reduce)").matches)document.documentElement.className="intro"}catch(e){}})()</script>
+<script>(function(){try{var n=performance.getEntriesByType("navigation")[0],t=n?n.type:"navigate",s=null;try{s=sessionStorage.getItem("ulraIntro")}catch(e){}if(t==="navigate"&&!s&&!matchMedia("(prefers-reduced-motion:reduce)").matches){document.documentElement.className="intro";try{sessionStorage.setItem("ulraIntro","1")}catch(e){}}else if(s){document.documentElement.className="seen"}}catch(e){}})()</script>
 <title>ULRA Hall of Records</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -289,6 +289,7 @@ dialog[open]{animation:pop .28s ease}
 .smallshare:hover{background:var(--gg);color:#1a1205;border-color:transparent}
 @media (max-width:400px){.rt{align-items:flex-start}.name{font-size:16px}.p1 .name{font-size:19px}.badge{font-size:11px;letter-spacing:.1em}h2{font-size:21px}.head{flex-direction:column;gap:2px}.run .pn{font-size:21px}.orn i{width:56px}}
 @media (prefers-reduced-motion:reduce){.sheen,.sp{animation:none!important}.cm{display:none}.star{animation:none!important;opacity:1;transform:none}}
+html.seen .sheen{animation:none!important}html.seen .cm{display:none}html.seen .star{animation:none!important;opacity:1;transform:none}
 @media (min-width: 800px) {
   main {
     max-width: 900px;
